@@ -21,7 +21,7 @@ namespace Arcapi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder
-                        .UseUrls("https://*:443")
+                        .UseUrls("http://[::]:80/", "http://0.0.0.0:80/")
                         .UseStartup<Startup>();
                 });
     }

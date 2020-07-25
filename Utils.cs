@@ -29,6 +29,33 @@ namespace Arcapi
             {
                 "core", "shiawase", "dynamix", "mirai", "yugamu", "lanota", "nijuusei", "rei", "tonesphere", "groovecoaster", "zettai", "chunithm", "prelude", "omatsuri", "vs", "extend"
             };
+            result.characters = Enumerable.Range(0, 15).ToList();
+            result.character_stats = Enumerable.Range(0, 15).Select(i => new Character
+            {
+                character_id = i,
+                char_type = i,
+                skill_id = "",
+                skill_requires_uncap = false,
+                skill_unlock_level = 0,
+                skill_id_uncap = "",
+                uncap_cores = new List<Core>
+                {
+                    new Core
+                    {
+                        amount = 0,
+                        core_type = "core_hallow",
+                        _id = "5f0eec2a6c9a3d012747a0d9"
+                    }
+                },
+                exp = 99999,
+                level = 9999,
+                prog = 1e5,
+                frag = 1e5,
+                overdrive = 1e5,
+                name = $"character{i}",
+                is_uncapped = false,
+                levelexp = 100
+            }).ToList();
             return result;
         }
     }

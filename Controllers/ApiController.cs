@@ -16,7 +16,6 @@ using Newtonsoft.Json.Linq;
 namespace Arcapi.Controllers
 {
     [ApiController]
-    [Route("coffee/12")]
     public class ApiController : ControllerBase
     {
         private readonly ILogger<ApiController> logger;
@@ -79,9 +78,9 @@ namespace Arcapi.Controllers
             return new JObject
             {
                 ["checksum"] = string.Concat(MD5.Create().ComputeHash(System.IO.File.ReadAllBytes(Path.Combine("dls", folder, file))).Select(b => b.ToString("x2"))),
-                //["url"] = $"http://192.168.1.5/{folder}/{file}"
+                ["url"] = $"http://39.106.92.32:81/{folder}/{file}"
                 //the fiddler can't capture the downloader so we will host a python server in http.
-                ["url"] = $"https://arc.estertion.win/dl/dl_{folder}/{file}"
+                //["url"] = $"https://arc.estertion.win/dl/dl_{folder}/{file}"
             };
         }
 
@@ -139,7 +138,7 @@ namespace Arcapi.Controllers
             return (ValueResult) new JArray(arr.Select(call =>
             {
                 var conn = Request.HttpContext.Connection;
-                var endpoint = $"https://localhost:{conn.LocalPort}/coffee/12{call.Value<string>("endpoint")}";
+                var endpoint = $"http://localhost:{conn.LocalPort}{call.Value<string>("endpoint")}";
 
                 return new JObject
                 {
