@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Arcapi.Contexts;
@@ -72,10 +74,47 @@ namespace Arcapi.Controllers
             };
         }
 
+        private static JObject GetFileHash(string folder, string file)
+        {
+            return new JObject
+            {
+                ["checksum"] = string.Concat(MD5.Create().ComputeHash(System.IO.File.ReadAllBytes(Path.Combine("dls", folder, file))).Select(b => b.ToString("x2"))),
+                //["url"] = $"http://192.168.1.5/{folder}/{file}"
+                //the fiddler can't capture the downloader so we will host a python server in http.
+                ["url"] = $"https://arc.estertion.win/dl/dl_{folder}/{file}"
+            };
+        }
+
         [HttpGet("serve/download/me/song")]
         public ActionResult<ValueResult> SongInfo()
         {
-            return (ValueResult) new JObject();
+            if (Request.Query["url"] == "false")
+                return (ValueResult) new JObject();
+            var res = new JObject();
+
+            foreach (var sid in Request.Query["sid"])
+                res.Add(sid, new JObject
+                {
+                    ["audio"] = GetFileHash(sid, "base.ogg"),
+                    ["chart"] = new JObject
+                    {
+                        ["0"] = GetFileHash(sid, "0.aff"),
+                        ["1"] = GetFileHash(sid, "1.aff"),
+                        ["2"] = GetFileHash(sid, "2.aff")
+                    }
+                });
+            return (ValueResult)res;
+        }
+
+        [HttpGet("download/{folder}/{file}")]
+        public ActionResult DownloadFile(string folder, string file)
+        {
+            logger.LogInformation($"trying to download {folder}/{file}");
+            if (file.EndsWith(".ogg"))
+                return File(System.IO.File.ReadAllBytes(Path.Combine("dls", folder, file)), "audio/ogg");
+            else if (file.EndsWith(".aff"))
+                return File(System.IO.File.ReadAllBytes(Path.Combine("dls", folder, file)), "text/plain; charset=utf-8");
+            else return BadRequest();
         }
 
         [HttpGet("game/info")]
