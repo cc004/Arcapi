@@ -29,6 +29,11 @@ namespace Arcapi
             {
                 "core", "shiawase", "dynamix", "mirai", "yugamu", "lanota", "nijuusei", "rei", "tonesphere", "groovecoaster", "zettai", "chunithm", "prelude", "omatsuri", "vs", "extend"
             };
+            result.world_songs = new List<string>
+            {
+                "vector", "monochromeprincess", "gloryroad", "lostdesire", "redandblue", "grimheart", "supernova", "vividtheory", "suomi", "darakunosono", "diode", "lucifer", "babaroque", "givemeanightmare", "anokumene", "etherstrike", "goodtek", "shadesoflight", "syro", "kanagawa", "guardina", "revixy", "worldvanquisher", "ignotus", "rabbitintheblackroom", "blaster", "blrink", "cyberneciacatharsis", "solitarydream", "qualia", "espebranch", "blacklotus", "sheriruth", "harutopia", "onefr", "bookmaker", "gekka", "nhelv", "faintlight", "corpssansorganes", "freefall", "pragmatism", "rugie", "dreaminattraction", "essenceoftwilight", "axiumcrisis"
+            };
+
             result.characters = Enumerable.Range(0, 15).ToList();
             result.character_stats = Enumerable.Range(0, 15).Select(i => new Character
             {
