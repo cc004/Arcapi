@@ -34,9 +34,9 @@ namespace Arcapi.Controllers
             if (!auth.StartsWith("Basic ")) return new LoginResult { success = false };
             auth = auth.Substring(6);
 
-            logger.LogInformation($"logging in with authorization {auth}");
+            logger.LogInformation($"logging in with authorization {Encoding.UTF8.GetString(Convert.FromBase64String(auth))}");
 
-            var token = Convert.ToBase64String(new Guid().ToByteArray().Concat(new Guid().ToByteArray()).ToArray());
+            var token = Convert.ToBase64String(Guid.NewGuid().ToByteArray().Concat(Guid.NewGuid().ToByteArray()).ToArray());
             context.Auths.Add(new Authorization
             {
                 username = auth.Split(':').First(),
@@ -78,7 +78,7 @@ namespace Arcapi.Controllers
             return new JObject
             {
                 ["checksum"] = string.Concat(MD5.Create().ComputeHash(System.IO.File.ReadAllBytes(Path.Combine("dls", folder, file))).Select(b => b.ToString("x2"))),
-                ["url"] = $"http://39.106.92.32:81/{folder}/{file}"
+                ["url"] = file.EndsWith(".ogg") ? $"https://raw.fastgit.org/BBC8890C3BF/40E9FA7D0/master/{folder}/{file}" : $"http://39.106.92.32:81/{folder}/{file}"
                 //the fiddler can't capture the downloader so we will host a python server in http.
                 //["url"] = $"https://arc.estertion.win/dl/dl_{folder}/{file}"
             };

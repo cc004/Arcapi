@@ -27,7 +27,7 @@ namespace Arcapi
             result.ticket = 9999;
             result.packs = new List<string>
             {
-                "core", "shiawase", "dynamix", "mirai", "yugamu", "lanota", "nijuusei", "rei", "tonesphere", "groovecoaster", "zettai", "chunithm", "prelude", "omatsuri", "vs", "extend"
+                "core", "zettai", "yozakurafubuki", "chunithm", "tonesphere", "surrender", "izana", "nijuusei", "amygdata", "omatsuri", "dropdead", "avantraze", "alexandrite", "auxesia", "heavenlycaress", "crosssoul", "altale", "bethere", "rei", "phantasia", "astraltale", "fallensquare", "feelssoright", "dataerror", "mirai", "einherjar", "yourvoiceso", "battlenoone", "groovecoaster", "dreadnought", "prelude", "teriqma", "yugamu", "empireofwinter", "mirzam", "scarletcage", "dottodot", "extend", "lanota", "metallicpunisher", "libertas", "callmyname", "carminescythe", "modelista", "laqryma", "saikyostronger", "impurebird", "shiawase", "vs", "dynamix", "filament"
             };
             result.world_songs = new List<string>
             {
